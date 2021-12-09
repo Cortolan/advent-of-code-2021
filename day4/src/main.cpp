@@ -68,19 +68,24 @@ int main()
 
     vector <int> bingo_numbers = get_bingo_numbers(data);
     vector <BingoBoard> all_bingo_boards = bingo_boards_setup(data);
-    BingoBoard winner;
+    vector <BingoBoard> all_winners;
 
     for (auto called_number : bingo_numbers){
         for (auto &bingo_board : all_bingo_boards){
-            bingo_board.check_for_number(called_number);
-            if (bingo_board.winner)
-                winner = bingo_board;
-                break;
+            if (!bingo_board.winner){
+                bingo_board.check_for_number(called_number);
+                if (bingo_board.winner){
+                    all_winners.push_back(bingo_board);
+                }
+            }
         }
-        if (winner.winner)
-            break;
     }
     
-    cout << "Last number " << winner.last_bingo_number << " with a score of " << winner.score << endl;
+    if (all_winners.size() > 0){
+        cout << "First winner on number " << all_winners[0].last_bingo_number << " with a score of " << all_winners[0].score << endl;
+        cout << "Last winner on number " << all_winners[all_winners.size()-1].last_bingo_number << " with a score of " << all_winners[all_winners.size()-1].score << endl;
+    }else{
+        cout << "No winners found";
+    }
     getchar();
 }

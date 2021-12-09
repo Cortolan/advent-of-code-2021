@@ -7,10 +7,10 @@ class BingoBoard
 {
 private:
     std::vector<std::vector <bool>> board_state;
-    std::vector<std::vector <int>> board_numbers;
     bool check_for_winner();
     void get_score();
 public:
+    std::vector<std::vector <int>> board_numbers;
     int last_bingo_number = -1;
     bool winner = false;
     int score = 0;
@@ -51,8 +51,11 @@ void BingoBoard::check_for_number(int bingo_board_number)
                     board_state[row][columb] = true;
                     last_bingo_number = bingo_board_number;
                     winner = check_for_winner();
-                    if (winner)
+                    if (winner){
                         get_score();
+                        return;
+                    }
+                    return;
                 }
             }       
         }    
@@ -63,8 +66,7 @@ bool BingoBoard::check_for_winner()
 {
     int columb_BingoBoard_count = 0;
     int row_BingoBoard_count = 0;
-    int diagnal_BingoBoard_count = 0;
-
+    
     for (auto row : board_state){ //check for row winner
         row_BingoBoard_count = 0;
          for (auto square : row){
@@ -85,27 +87,6 @@ bool BingoBoard::check_for_winner()
             return true;
     }
 
-    // if (board_state.size() == board_state[0].size()){
-    // for (int i =0; i < board_state.size(); i++){ // check left to right diagnal for winner
-    //     if(board_state[i][i])
-    //         diagnal_BingoBoard_count++;
-    // }
-    // if (diagnal_BingoBoard_count == board_state.size())
-    //     return true;
-    
-    // diagnal_BingoBoard_count = 0;
-    // int columb =0;   
-    // for (int i =board_state.size()-1; i >= 0; i--){ //check right to left diagnal for winner
-    //     if(board_state[i][columb]){
-    //         diagnal_BingoBoard_count++;
-    //     }
-    //     columb++;
-    // }
-    // if (diagnal_BingoBoard_count == board_state.size())
-    //     return true;
-    // }else{
-    //     std::cout << "Diagnal is not possible on this board" << std::endl;
-    // }    
     return false;
 }
 void BingoBoard::get_score()
