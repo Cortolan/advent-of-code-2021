@@ -59,8 +59,7 @@ void wire_solver::decodeOutput()
         std::set_intersection(coded_four.begin(), coded_four.end(), number.begin(), number.end(), std::back_inserter(intersection_with_four));
         number_str += decodeNumber(number.length(), intersection_with_one.length(), intersection_with_four.length());
     }
-    string_to_int << number_str;
-    string_to_int >> decoded_value;
+    decoded_value = std::stoi(number_str);
 }
 
 std::string wire_solver::decodeNumber(int number_length, int intersection_with_one, int intersection_with_four)
